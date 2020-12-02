@@ -8,9 +8,39 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var number1Text: String = ""
+    @State private var number2Text: String = ""
+    
+    var number1: Double {
+        Double(number1Text) ?? 0
+    }
+    
+    var number2: Double {
+        Double(number2Text) ?? 0
+    }
+    
     var body: some View {
-        Text("Hello, world!")
+        NavigationView {
+            VStack {
+                HStack {
+                    TextField("Input 1", text: $number1Text)
+                        .keyboardType(.decimalPad)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                    
+                    Text("+")
+                    
+                    TextField("Input 2", text: $number2Text)
+                        .keyboardType(.decimalPad)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                }
+                
+                Text("Sum: \(Calculator.add(a: number1, b: number2))")
+                
+                Spacer()
+            }
             .padding()
+            .navigationBarTitle("Calculator")
+        }
     }
 }
 
