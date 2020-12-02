@@ -21,7 +21,7 @@ class CICDDemoTests: XCTestCase {
     func testAddFunction() throws {
         let number1: Double = 2
         let number2: Double = 3
-        let exp: Double = 5
+        let exp: Double = 6
         
         XCTAssertEqual(exp, Calculator.add(a: number1, b: number2))
     }
