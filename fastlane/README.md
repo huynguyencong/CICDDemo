@@ -21,6 +21,11 @@ or alternatively using `brew install fastlane`
 fastlane ios test
 ```
 Testing
+### ios adhoc
+```
+fastlane ios adhoc
+```
+Build Adhoc and upload to App Manager
 ### ios build_adhoc
 ```
 fastlane ios build_adhoc
@@ -35,7 +40,7 @@ Build App Store
 ```
 fastlane ios upload_adhoc
 ```
-
+Upload adhoc
 ### ios upload_app_manager
 ```
 fastlane ios upload_app_manager

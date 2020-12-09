@@ -26,7 +26,7 @@ adhoc_ipa_name = 'CICDDemo-Adhoc'
 adhoc_app_id = 'com.nch.Test'
 adhoc_scheme = 'CICDDemo'
 adhoc_app_manager_version_name_prefix = 'CICDDemo Adhoc'
-adhoc_app_manager_app_id = '606'
+adhoc_app_manager_app_id = '497'
 
 app_store_app_id = 'com.nch.Test'
 app_store_ipa_name = 'CICDDemo-AppStore'
@@ -38,11 +38,17 @@ platform :ios do
     run_tests(scheme: 'CICDDemo')
   end
 
+  desc "Build Adhoc and upload to App Manager"
+  lane :adhoc do 
+  	build_adhoc
+  	upload_adhoc
+  end
+
   desc "Build Adhoc"
   lane :build_adhoc do 
   	get_certificates(team_id: team_id)
   	get_provisioning_profile(app_identifier: adhoc_app_id, adhoc: 'true', team_id: team_id)
-  	build_app(scheme: adhoc_scheme, export_method: 'ad-hoc', output_name: adhoc_ipa_name)
+  	build_app(scheme: adhoc_scheme, export_method: 'ad-hoc', output_name: adhoc_ipa_name, include_bitcode: false)
   end
 
   desc "Build App Store"
@@ -52,6 +58,7 @@ platform :ios do
   	build_app(scheme: app_store_scheme, export_method: 'app-store', output_name: app_store_ipa_name)
   end
 
+  desc "Upload adhoc"
   lane :upload_adhoc do
   	upload_app_manager(ipa_path: "#{adhoc_ipa_name}.ipa", version_name_prefix: adhoc_app_manager_version_name_prefix, app_manager_app_id: adhoc_app_manager_app_id)
   end
@@ -72,11 +79,12 @@ platform :ios do
 
   	puts "Uploading IPA file to 2359 App Manager, IPA path: #{ipa_path}, version name: #{version_name}, 2359 App Manager app id: #{app_manager_app_id}."
 
-  	`curl -v -F binary=@"../#{ipa_path}" \
-             -F api_token="#{a_2359_app_manager_key}" \
-             -F platform="iOS" \
-             -F version_number="#{version_name}" \
-             https://app.2359media.net/api/v1/apps/#{app_manager_app_id}/versions`
+   	sh "curl -F binary=@../#{ipa_path} \
+             -F api_token=#{a_2359_app_manager_key} \
+             -F platform='iOS' \
+             -F version_number='#{version_name}' \
+             https://app.2359media.net/api/v1/apps/#{app_manager_app_id}/versions"
+
 
     puts 'Uploaded to 2359 App Manager'
   end
