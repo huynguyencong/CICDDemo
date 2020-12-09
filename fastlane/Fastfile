@@ -15,9 +15,52 @@
 
 default_platform(:ios)
 
+team_id = '94KKN3D4YS'
+a_2359_app_manager_key = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTE5LCJhcGlfa2V5IjoiMzM2NTFmNjctODI4NC00ZjlhLWE1YzAtMGEwNzYxMmJlNjQ4In0.qjcNqfcvLkaJTH-J_lkDh92Gm3k1ecl_vCRPA8K6rRo'
+
 platform :ios do
-  desc "Description of what the lane does"
+  desc "Testing"
   lane :test do
     run_tests(scheme: 'CICDDemo')
   end
+
+  desc "Build Adhoc"
+  lane :build_adhoc do 
+  	get_certificates(team_id: team_id)
+  	get_provisioning_profile(app_identifier: 'com.nch.Test', adhoc: 'true', team_id: team_id)
+  	build_app(scheme: "CICDDemo", export_method: 'ad-hoc', output_name: 'CICDDemo-Adhoc')
+  end
+
+  desc "Build App Store"
+  lane :build_appstore do 
+  	get_certificates(team_id: team_id)
+  	get_provisioning_profile(app_identifier: 'com.nch.Test', team_id: team_id)
+  	build_app(scheme: "CICDDemo", export_method: 'app-store', output_name: 'CICDDemo-AppStore')
+  end
+
+
+  desc "Upload to 2359 App Manager (Not working now - API Not found)"
+  lane :upload_app_manager do |options|
+  	ipa_path = options[:ipa_path]
+  	version_name_prefix = options[:version_name_prefix]
+  	app_id = options[:app_id]
+
+  	version = get_ipa_info_plist_value(
+  		key: "CFBundleShortVersionString",
+  		ipa: ipa_path
+  	)
+
+  	version_name = "#{version_name_prefix} #{version}"
+
+  	puts "Uploading IPA file to 2359 App Manager, IPA path: #{ipa_path}, version name: #{version_name}, app id: #{app_id}"
+
+  	`curl -v -F binary=@"../#{ipa_path}" \
+             -F api_token="#{a_2359_app_manager_key}" \
+             -F platform="iOS" \
+             -F version_number="#{version_name}" \
+             https://app.2359media.net/api/v1/apps/#{app_id}/versions`
+
+    puts 'Uploaded to 2359 App Manager'
+  end
+
 end

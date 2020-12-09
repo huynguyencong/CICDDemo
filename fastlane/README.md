@@ -20,7 +20,27 @@ or alternatively using `brew install fastlane`
 ```
 fastlane ios test
 ```
-Description of what the lane does
+Testing
+### ios archive_adhoc
+```
+fastlane ios archive_adhoc
+```
+Archive Adhoc
+### ios archive_appstore
+```
+fastlane ios archive_appstore
+```
+Archive App Store
+### ios test_params
+```
+fastlane ios test_params
+```
+
+### ios upload_app_manager
+```
+fastlane ios upload_app_manager
+```
+Upload to 2359 App Manager
 
 ----
 
