@@ -13,10 +13,24 @@
 # Uncomment the line if you want fastlane to automatically update itself
 # update_fastlane
 
+# Please set these environment variables:
+# A_2359_APP_MANAGER_API_KEY: for upload file to 2359 media
+# FASTLANE_USER, FASTLANE_SESSION: for get_certificates, get_provisioning_profile
+
 default_platform(:ios)
 
 team_id = '94KKN3D4YS'
-a_2359_app_manager_key = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTE5LCJhcGlfa2V5IjoiMzM2NTFmNjctODI4NC00ZjlhLWE1YzAtMGEwNzYxMmJlNjQ4In0.qjcNqfcvLkaJTH-J_lkDh92Gm3k1ecl_vCRPA8K6rRo'
+a_2359_app_manager_key = ENV['A_2359_APP_MANAGER_API_KEY']
+
+adhoc_ipa_name = 'CICDDemo-Adhoc'
+adhoc_app_id = 'com.nch.Test'
+adhoc_scheme = 'CICDDemo'
+adhoc_app_manager_version_name_prefix = 'CICDDemo Adhoc'
+adhoc_app_manager_app_id = '606'
+
+app_store_app_id = 'com.nch.Test'
+app_store_ipa_name = 'CICDDemo-AppStore'
+app_store_scheme = 'CICDDemo'
 
 platform :ios do
   desc "Testing"
@@ -27,15 +41,19 @@ platform :ios do
   desc "Build Adhoc"
   lane :build_adhoc do 
   	get_certificates(team_id: team_id)
-  	get_provisioning_profile(app_identifier: 'com.nch.Test', adhoc: 'true', team_id: team_id)
-  	build_app(scheme: "CICDDemo", export_method: 'ad-hoc', output_name: 'CICDDemo-Adhoc')
+  	get_provisioning_profile(app_identifier: adhoc_app_id, adhoc: 'true', team_id: team_id)
+  	build_app(scheme: adhoc_scheme, export_method: 'ad-hoc', output_name: adhoc_ipa_name)
   end
 
   desc "Build App Store"
   lane :build_appstore do 
   	get_certificates(team_id: team_id)
-  	get_provisioning_profile(app_identifier: 'com.nch.Test', team_id: team_id)
-  	build_app(scheme: "CICDDemo", export_method: 'app-store', output_name: 'CICDDemo-AppStore')
+  	get_provisioning_profile(app_identifier: app_store_app_id, team_id: team_id)
+  	build_app(scheme: app_store_scheme, export_method: 'app-store', output_name: app_store_ipa_name)
+  end
+
+  lane :upload_adhoc do
+  	upload_app_manager(ipa_path: "#{adhoc_ipa_name}.ipa", version_name_prefix: adhoc_app_manager_version_name_prefix, app_manager_app_id: adhoc_app_manager_app_id)
   end
 
 
@@ -43,7 +61,7 @@ platform :ios do
   lane :upload_app_manager do |options|
   	ipa_path = options[:ipa_path]
   	version_name_prefix = options[:version_name_prefix]
-  	app_id = options[:app_id]
+  	app_manager_app_id = options[:app_manager_app_id]
 
   	version = get_ipa_info_plist_value(
   		key: "CFBundleShortVersionString",
@@ -52,13 +70,13 @@ platform :ios do
 
   	version_name = "#{version_name_prefix} #{version}"
 
-  	puts "Uploading IPA file to 2359 App Manager, IPA path: #{ipa_path}, version name: #{version_name}, app id: #{app_id}"
+  	puts "Uploading IPA file to 2359 App Manager, IPA path: #{ipa_path}, version name: #{version_name}, 2359 App Manager app id: #{app_manager_app_id}."
 
   	`curl -v -F binary=@"../#{ipa_path}" \
              -F api_token="#{a_2359_app_manager_key}" \
              -F platform="iOS" \
              -F version_number="#{version_name}" \
-             https://app.2359media.net/api/v1/apps/#{app_id}/versions`
+             https://app.2359media.net/api/v1/apps/#{app_manager_app_id}/versions`
 
     puts 'Uploaded to 2359 App Manager'
   end

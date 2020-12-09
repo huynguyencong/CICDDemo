@@ -21,26 +21,26 @@ or alternatively using `brew install fastlane`
 fastlane ios test
 ```
 Testing
-### ios archive_adhoc
+### ios build_adhoc
 ```
-fastlane ios archive_adhoc
+fastlane ios build_adhoc
 ```
-Archive Adhoc
-### ios archive_appstore
+Build Adhoc
+### ios build_appstore
 ```
-fastlane ios archive_appstore
+fastlane ios build_appstore
 ```
-Archive App Store
-### ios test_params
+Build App Store
+### ios upload_adhoc
 ```
-fastlane ios test_params
+fastlane ios upload_adhoc
 ```
 
 ### ios upload_app_manager
 ```
 fastlane ios upload_app_manager
 ```
-Upload to 2359 App Manager
+Upload to 2359 App Manager (Not working now - API Not found)
 
 ----
 
