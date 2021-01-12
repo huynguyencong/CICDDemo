@@ -14,15 +14,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
           
-      - name: Test
-        run: fastlane test
-        
-      - name: Change shell to zsh
-        run: chsh -s /bin/zsh
+      # - name: Test
+      #  run: fastlane test
       
       - name: Build
         run: fastlane adhoc
         env:
           FASTLANE_USER: ${{ secrets.FASTLANE_USER }}
-          FASTLANE_SESSION: ${{ secrets.FASTLANE_SESSION }}
+          FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
           A_2359_APP_MANAGER_API_KEY: ${{ secrets.A_2359_APP_MANAGER_API_KEY }}
