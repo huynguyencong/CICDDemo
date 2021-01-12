@@ -1,6 +1,8 @@
 name: iOS starter workflow
 
-on: push
+on: 
+  push:
+    paths: '**.swift'
 
 jobs:
   build:
