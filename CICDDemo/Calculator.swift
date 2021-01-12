@@ -12,3 +12,7 @@ class Calculator {
         return a + b
     }
 }
+
+class testSwiftLintCICD {
+    var a: Int = 0
+}
