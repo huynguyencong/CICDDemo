@@ -8,7 +8,13 @@
 import Foundation
 
 class Calculator {
+    //swiftlint:disable identifier_name
     static func add(a: Double, b: Double) -> Double {
-        return a + b
+        if a > 0 {
+            return a + b
+        } else {
+            return 0
+        }
     }
+    //swiftlint:enable identifier_name
 }
