@@ -10,7 +10,7 @@ on:
 jobs:
   test:
     name: Testing using fastlane
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
       - name: Checkout
@@ -21,13 +21,17 @@ jobs:
         with: 
           ruby-version: '>= 2.6'
           
+      - name: Install bundler
+        run: |
+          gem install bundler:1.17.2
+          
       - uses: maierj/fastlane-action@v2.0.0
         with:
           lane: 'test'
           
   swiftlint:
     name: Swiftlint
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v1
