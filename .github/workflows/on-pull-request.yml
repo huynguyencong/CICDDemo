@@ -1,4 +1,4 @@
-name: Fastlane test
+name: On pull request
 
 on: 
   pull_request:
