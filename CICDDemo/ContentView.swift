@@ -23,7 +23,7 @@ struct ContentView: View {
         NavigationView {
             VStack {
                 HStack {
-                    TextField("B 1", text: $number1Text)
+                    TextField("Input 1", text: $number1Text)
                         .keyboardType(.decimalPad)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                     
