@@ -22,13 +22,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
           
-      - name: Test
-        run: fastlane test
+      # - name: Test
+      #  run: fastlane test
       
+      - name: Setup ruby
+        uses: actions/setup-ruby@v1
+        with: 
+          ruby-version: '>= 2.6'
+          
+      - name: Install bundler
+        run: |
+          gem install bundler:1.17.2
+          
       - name: Build
-        run: | 
-          echo "fastlane user: $FASTLANE_USER, session $FASTLANE_SESSION"
-          fastlane adhoc
+        uses: maierj/fastlane-action@v2.0.0
+        with:
+          lane: 'adhoc'
         env:
           FASTLANE_USER: ${{ secrets.FASTLANE_USER }}
           FASTLANE_SESSION: ${{ secrets.FASTLANE_SESSION }}
