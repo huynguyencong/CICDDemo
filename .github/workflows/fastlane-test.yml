@@ -18,7 +18,9 @@ jobs:
         run: fastlane test
       
       - name: Build
-        run: fastlane adhoc
+        run: | 
+          echo "fastlane user: $FASTLANE_USER, session $FASTLANE_SESSION"
+          fastlane adhoc
         env:
           FASTLANE_USER: ${{ secrets.FASTLANE_USER }}
           FASTLANE_SESSION: ${{ secrets.FASTLANE_SESSION }}
