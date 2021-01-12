@@ -21,5 +21,6 @@ jobs:
         run: fastlane adhoc
         env:
           FASTLANE_USER: ${{ secrets.FASTLANE_USER }}
+          FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}
           FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
           A_2359_APP_MANAGER_API_KEY: ${{ secrets.A_2359_APP_MANAGER_API_KEY }}
