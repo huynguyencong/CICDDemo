@@ -4,14 +4,6 @@ on:
   push:
     branches:
       - release
-  workflow_dispatch:
-      inputs:
-        logLevel:
-          description: 'Log level'     
-          required: true
-          default: 'warning'
-        tags:
-          description: 'Test scenario tags'   
 
 jobs:
   test:
@@ -22,22 +14,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
           
-      # - name: Test
-      #  run: fastlane test
+      - name: Test
+        run: fastlane test
+        
+      - name: Change shell to zsh
+        run: chsh -s /bin/zsh
       
-      - name: Setup ruby
-        uses: actions/setup-ruby@v1
-        with: 
-          ruby-version: '>= 2.6'
-          
-      - name: Install bundler
-        run: |
-          gem install bundler:1.17.2
-          
       - name: Build
-        uses: maierj/fastlane-action@v2.0.0
-        with:
-          lane: 'adhoc'
+        run: fastlane adhoc
         env:
           FASTLANE_USER: ${{ secrets.FASTLANE_USER }}
           FASTLANE_SESSION: ${{ secrets.FASTLANE_SESSION }}
