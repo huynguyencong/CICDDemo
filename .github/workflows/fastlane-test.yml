@@ -13,16 +13,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-        
-      - name: Setup environment variables
-        uses: secrethub/actions/env-export@v0.2.1
-        env:
-          FASTLANE_USER: ${{ secrets.FASTLANE_USER }}
-          FASTLANE_SESSION: ${{ secrets.FASTLANE_SESSION }}
-          A_2359_APP_MANAGER_API_KEY: ${{ secrets.A_2359_APP_MANAGER_API_KEY }}
           
       - name: Test
         run: fastlane test
       
       - name: Build
         run: fastlane adhoc
+        env:
+          FASTLANE_USER: ${{ secrets.FASTLANE_USER }}
+          FASTLANE_SESSION: ${{ secrets.FASTLANE_SESSION }}
+          A_2359_APP_MANAGER_API_KEY: ${{ secrets.A_2359_APP_MANAGER_API_KEY }}
