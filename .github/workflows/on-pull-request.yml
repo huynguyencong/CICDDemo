@@ -10,7 +10,7 @@ on:
 jobs:
   test:
     name: Testing using fastlane
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
