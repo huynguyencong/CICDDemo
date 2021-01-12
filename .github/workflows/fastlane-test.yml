@@ -1,4 +1,4 @@
-name: Fastlane test
+name: Release using fastlane
 
 on: 
   push:
@@ -16,3 +16,6 @@ jobs:
           
       - name: Test
         run: fastlane test
+      
+      - name: Build
+        run: fastlane adhoc
