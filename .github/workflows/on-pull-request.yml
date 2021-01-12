@@ -26,6 +26,7 @@ jobs:
           lane: 'test'
           
   swiftlint:
+    name: Swiftlint
     runs-on: macos-latest
     steps:
       - name: Checkout
