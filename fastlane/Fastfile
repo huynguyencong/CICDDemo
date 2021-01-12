@@ -16,6 +16,7 @@
 # Please set these environment variables:
 # A_2359_APP_MANAGER_API_KEY: for upload file to 2359 media
 # FASTLANE_USER, FASTLANE_SESSION: for get_certificates, get_provisioning_profile
+# How to generate FASTLANE_SESSION: fastlane spaceauth -u <your-apple-email-id>
 
 default_platform(:ios)
 
@@ -26,7 +27,7 @@ adhoc_ipa_name = 'CICDDemo-Adhoc'
 adhoc_app_id = 'com.nch.Test'
 adhoc_scheme = 'CICDDemo'
 adhoc_app_manager_version_name_prefix = 'CICDDemo Adhoc'
-adhoc_app_manager_app_id = '497'
+adhoc_app_manager_app_id = '606'
 
 app_store_app_id = 'com.nch.Test'
 app_store_ipa_name = 'CICDDemo-AppStore'
