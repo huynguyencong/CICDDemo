@@ -25,12 +25,14 @@ jobs:
 
       - name: Import provisioning
         run: |
-          touch Provisioning.txt
-          echo $ADHOC_PROVISIONING >> Provisioning.txt
-          base64 -D -i Provisioning.txt -o Provisioning.mobileprovision
-          uuid=`grep UUID -A1 -a Provisioning.mobileprovision | grep -io "[-A-F0-9]\{36\}"`
+          read_file='Provisioning.txt'
+          provisioning_file='Provisioning.mobileprovision'
+          touch $read_file
+          echo $ADHOC_PROVISIONING >> $read_file
+          base64 -D -i $read_file -o $provisioning_file
+          uuid=`grep UUID -A1 -a $provisioning_file | grep -io "[-A-F0-9]\{36\}"`
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-          cp Provisioning.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/$uuid.mobileprovision
+          cp $provisioning_file ~/Library/MobileDevice/Provisioning\ Profiles/$uuid.mobileprovision
         env:
           ADHOC_PROVISIONING: ${{ secrets.ADHOC_PROVISIONING }}
       
