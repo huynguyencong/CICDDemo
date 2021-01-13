@@ -14,8 +14,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
           
-      # - name: Test
-      #  run: fastlane test
+      - name: Test
+        run: fastlane test
 
       - name: Import certificate
         uses: apple-actions/import-codesign-certs@v1
