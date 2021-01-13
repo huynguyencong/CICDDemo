@@ -15,12 +15,27 @@
 
 # - Please set these environment variables:
 # A_2359_APP_MANAGER_API_KEY: for upload file to 2359 media
-# FASTLANE_USER, FASTLANE_PASSWORD: for get_certificates, get_provisioning_profile
-# (If FASTLANE_SESSION can be used, don't need FASTLANE_PASSWORD. But FASTLANE_SESSION doesn't work in Github action.
-# How to generate FASTLANE_SESSION: fastlane spaceauth -u <your-apple-email-id>)
 
-# - For certificates:
-#  + On Github action, convert it to base 64 string, then copy to Github secrets, then load it in yml file.
+# - Copy certificates on Github action, convert it to base 64 string, then copy to Github secrets, then load it in yml file.
+# - name: Import certificate
+#   uses: apple-actions/import-codesign-certs@v1
+#   with: 
+#     p12-file-base64: ${{ secrets.ADHOC_CERTIFICATE }}
+#     p12-password: ${{ secrets.ADHOC_CERTIFICATE_PASSWORD }}
+
+# - Copy provisioning in Github action
+# - name: Import provisioning
+#   run: |
+#     read_file='Provisioning.txt'
+#     provisioning_file='Provisioning.mobileprovision'
+#     touch $read_file
+#     echo $ADHOC_PROVISIONING >> $read_file
+#     base64 -D -i $read_file -o $provisioning_file
+#     uuid=`grep UUID -A1 -a $provisioning_file | grep -io "[-A-F0-9]\{36\}"`
+#     mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+#     cp $provisioning_file ~/Library/MobileDevice/Provisioning\ Profiles/$uuid.mobileprovision
+#   env:
+#     ADHOC_PROVISIONING: ${{ secrets.ADHOC_PROVISIONING }}
 
 
 default_platform(:ios)
