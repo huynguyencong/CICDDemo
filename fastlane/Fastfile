@@ -20,16 +20,16 @@
 
 default_platform(:ios)
 
-team_id = '94KKN3D4YS'
+team_id = 'BXU3B85A8F'
 a_2359_app_manager_key = ENV['A_2359_APP_MANAGER_API_KEY']
 
 adhoc_ipa_name = 'CICDDemo-Adhoc'
-adhoc_app_id = 'com.nch.Test'
+adhoc_app_id = 'com.2359media.Test'
 adhoc_scheme = 'CICDDemo'
 adhoc_app_manager_version_name_prefix = 'CICDDemo Adhoc'
 adhoc_app_manager_app_id = '606'
 
-app_store_app_id = 'com.nch.Test'
+app_store_app_id = 'com.2359media.Test'
 app_store_ipa_name = 'CICDDemo-AppStore'
 app_store_scheme = 'CICDDemo'
 
