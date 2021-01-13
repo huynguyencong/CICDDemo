@@ -53,14 +53,14 @@ platform :ios do
   desc "Build Adhoc"
   lane :build_adhoc do 
   	# get_certificates(team_id: team_id) # can not use because limit of number distribution certificate can generate.
-  	get_provisioning_profile(app_identifier: adhoc_app_id, adhoc: 'true', team_id: team_id)
+  	# get_provisioning_profile(app_identifier: adhoc_app_id, adhoc: 'true', team_id: team_id)
   	build_app(scheme: adhoc_scheme, export_method: 'ad-hoc', output_name: adhoc_ipa_name, include_bitcode: false)
   end
 
   desc "Build App Store"
   lane :build_appstore do 
   	# get_certificates(team_id: team_id) # can not use because limit of number distribution certificate can generate.
-  	get_provisioning_profile(app_identifier: app_store_app_id, team_id: team_id)
+  	# get_provisioning_profile(app_identifier: app_store_app_id, team_id: team_id)
   	build_app(scheme: app_store_scheme, export_method: 'app-store', output_name: app_store_ipa_name)
   end
 
