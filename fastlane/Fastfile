@@ -13,10 +13,15 @@
 # Uncomment the line if you want fastlane to automatically update itself
 # update_fastlane
 
-# Please set these environment variables:
+# - Please set these environment variables:
 # A_2359_APP_MANAGER_API_KEY: for upload file to 2359 media
-# FASTLANE_USER, FASTLANE_SESSION: for get_certificates, get_provisioning_profile
-# How to generate FASTLANE_SESSION: fastlane spaceauth -u <your-apple-email-id>
+# FASTLANE_USER, FASTLANE_PASSWORD: for get_certificates, get_provisioning_profile
+# (If FASTLANE_SESSION can be used, don't need FASTLANE_PASSWORD. But FASTLANE_SESSION doesn't work in Github action.
+# How to generate FASTLANE_SESSION: fastlane spaceauth -u <your-apple-email-id>)
+
+# - For certificates:
+#  + On Github action, convert it to base 64 string, then copy to Github secrets, then load it in yml file.
+
 
 default_platform(:ios)
 
@@ -47,14 +52,14 @@ platform :ios do
 
   desc "Build Adhoc"
   lane :build_adhoc do 
-  	get_certificates(team_id: team_id)
+  	# get_certificates(team_id: team_id) # can not use because limit of number distribution certificate can generate.
   	get_provisioning_profile(app_identifier: adhoc_app_id, adhoc: 'true', team_id: team_id)
   	build_app(scheme: adhoc_scheme, export_method: 'ad-hoc', output_name: adhoc_ipa_name, include_bitcode: false)
   end
 
   desc "Build App Store"
   lane :build_appstore do 
-  	get_certificates(team_id: team_id)
+  	# get_certificates(team_id: team_id) # can not use because limit of number distribution certificate can generate.
   	get_provisioning_profile(app_identifier: app_store_app_id, team_id: team_id)
   	build_app(scheme: app_store_scheme, export_method: 'app-store', output_name: app_store_ipa_name)
   end
