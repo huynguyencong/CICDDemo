@@ -18,3 +18,7 @@ class Calculator {
     }
     //swiftlint:enable identifier_name
 }
+
+class testSwiftLintCICD {
+    var a: Int = 0
+}
